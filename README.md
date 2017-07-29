@@ -11,8 +11,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[imageAllClasses]: ./writeup files/class_examples_2.png "One example of each sign class."
-[imageClassDistribution]: ./writeup files/frequency of classes in the training dataset.png "Distribution of trainign examples among the classes."
+[imageAllClasses]: ./writeup_files/class_examples_2.png "One example of each sign class."
+[imageClassDistribution]: ./writeup_files/frequency_of_classes_training_set.png "Distribution of trainign examples among the classes."
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [image5]: ./examples/placeholder.png "Traffic Sign 2"
