@@ -11,8 +11,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
+[imageAllClasses]: "./writeup files/class_examples_2.png" "One example of each sign class."
+[imageClassDistribution]: "./writeup files/frequency of classes in the training dataset.png" "Distribution of trainign examples among the classes."
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [image5]: ./examples/placeholder.png "Traffic Sign 2"
@@ -28,26 +28,30 @@ The goals / steps of this project are the following:
 
 ####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
 
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+You're reading it! and here is a link to my [project code](https://github.com/marcbadger/CarND-Traffic-Sign-Classifier-Project/blob/master/Badger_2017_Traffic_Sign_Classifier.ipynb)
 
 ###Data Set Summary & Exploration
 
 ####1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
-I used the pandas library to calculate summary statistics of the traffic
+I used the numpy shape and unique functions to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of training set is 34799.
+* The size of the validation set is 4410.
+* The size of test set is 12630.
+* The shape of a traffic sign image is [32, 32, 3].
+* The number of unique classes/labels in the data set is 43.
 
 ####2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Here is an example image from each class in the data set.  As you can tell, the quality of some of the images is pretty terrible (pixellated, occlusions, blurry, dark, etc.) and I'm amazed that the network gets most of these right!  The brighness of the images varies a lot, so there's a good chance that some sort of histogram equalization pre-processing will help.  It's not implemented here, but an alternative, more powerful, approach is to let the neural network determine the best pre-processing for us.  To do so we will need to augment the training data with copies of the training set images with altered brightness, translation, and affine transformations.
 
-![alt text][image1]
+![alt text][imageAllClasses]
+
+Another interesting observation is that the frequency of classes varies by an order of magnitude among classes. Presumably the distribution in the training set is representative of traffic signs in reality, so giving our classifier a bias towards common signs is probably be a good thing unless there is a case of an uncommon sign that is very very important to not mis-classify (i.e. a false negative of an uncommon but important sign would be bad). So we'll have to look closely at the confusion matrix to make sure rare, but important (such as wrong way signs) aren't ignored.
+
+![alt text][imageClassDistribution]
 
 ###Design and Test a Model Architecture
 
