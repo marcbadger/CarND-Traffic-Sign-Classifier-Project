@@ -1,6 +1,6 @@
-**Build a Traffic Sign Recognition Project**
+**Build a Traffic Sign Recognition Project Writeup**
 
-The goals / steps of this project are the following:
+The goals of this project were the following:
 * Load the data set (see below for links to the project data set)
 * Explore, summarize and visualize the data set
 * Design, train and test a model architecture
@@ -12,27 +12,21 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [imageAllClasses]: ./writeup_files/class_examples_2.png "One example of each sign class."
-[imageClassDistribution]: ./writeup_files/frequency_of_classes_training_set.png "Distribution of trainign examples among the classes."
-[image3]: ./examples/random_noise.jpg "Random Noise"
+[imageClassDistribution]: ./writeup_files/frequency_of_classes_training_set.png "Distribution of training examples."
+[imageClassDistributionValid]: ./writeup_files/frequency_of_classes_validation_set.png "Distribution of validation examples."
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [image5]: ./examples/placeholder.png "Traffic Sign 2"
 [image6]: ./examples/placeholder.png "Traffic Sign 3"
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
-## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
+# Writeup
 
----
-###Writeup / README
+The following is a writeup of my work on the Traffic Sign Classifier project for the Self Driving Car Nanodegree program.  Here is a link to my [project code](https://github.com/marcbadger/CarND-Traffic-Sign-Classifier-Project/blob/master/Badger_2017_Traffic_Sign_Classifier.ipynb)
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
+## Data Set Summary & Exploration
 
-You're reading it! and here is a link to my [project code](https://github.com/marcbadger/CarND-Traffic-Sign-Classifier-Project/blob/master/Badger_2017_Traffic_Sign_Classifier.ipynb)
-
-###Data Set Summary & Exploration
-
-####1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
+#### 1. Basic summary of the data set.
 
 I used the numpy shape and unique functions to calculate summary statistics of the traffic
 signs data set:
@@ -43,7 +37,7 @@ signs data set:
 * The shape of a traffic sign image is [32, 32, 3].
 * The number of unique classes/labels in the data set is 43.
 
-####2. Include an exploratory visualization of the dataset.
+#### 2. Exploratory visualization of the dataset.
 
 Here is an example image from each class in the data set.  As you can tell, the quality of some of the images is pretty terrible (pixellated, occlusions, blurry, dark, etc.) and I'm amazed that the network gets most of these right!  The brighness of the images varies a lot, so there's a good chance that some sort of histogram equalization pre-processing will help.  It's not implemented here, but an alternative, more powerful, approach is to let the neural network determine the best pre-processing for us.  To do so we will need to augment the training data with copies of the training set images with altered brightness, translation, and affine transformations.
 
@@ -53,7 +47,11 @@ Another interesting observation is that the frequency of classes varies by an or
 
 ![alt text][imageClassDistribution]
 
-###Design and Test a Model Architecture
+The validation set follows a similar distribution:
+
+![alt_text][imageClassDistributionValid]
+
+### Design and Test a Model Architecture
 
 ####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
