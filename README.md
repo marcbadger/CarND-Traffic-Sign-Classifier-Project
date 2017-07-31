@@ -15,8 +15,8 @@ The goals of this project were the following:
 [imageClassDistribution]: ./writeup_files/frequency_of_classes_training_set.png "Distribution of training examples."
 [imageClassDistributionValid]: ./writeup_files/frequency_of_classes_validation_set.png "Distribution of validation examples."
 [imageHistogramEqualization]: ./writeup_files/histogram_equalization_example.png "Distribution of validation examples."
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
+[imageNetworkDiagram]: ./writeup_files/network_diagram.png "Diagram of the network used to classifiy German street signs."
+[imageConfusionMatrix]: ./writeup_files/confusion_matrix_norm_testset.png "Confusion matrix for the final model on the test set."
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
@@ -65,51 +65,35 @@ As a last step, I normalized the image data so that gradient descent will conver
 
 #### 2.Final model architecture.
 
+My final model consisted of two 5x5 convolution layers with valid padding, each of which was followed by a relu and 2x2 max pooling layer.  Outputs passed through two fully connected layers, the first of which was followed by a dropout layer (p = 0.5 during training), and finally onto a softmax layer.  The outputs of each convoldution/relu/maxpooling layer were flattened and concatenated together before input into the fully connected layer (following the idea of skip-layer connections or multi-scale features).  The model is shown in the following diagram:
 
-
-My final model consisted of the following layers:
-
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+![alt_text][imageNetworkDiagram]
  
+#### 3-4. Description of model training and model selection approach.
+
+The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+
+I first started out by implementing dropout on the vanilla LeNet architecture because dropout generally works very well at preventing overfitting.  All models were trained with the Adam optomizer with an initial learning rate of 0.001 on batches containing 128 training examples.  After 60 training epochs, it reached 92 percent accuracy on the vlidation set, but seemed to be plateuing.  I then reduced the training rate to 0.0001 and trained for another 60 more epochs to reach 94.3 percent accuracy.
+
+I then implemented a model including skip-layer connections (see diagram above) and re-trained the network from scratch following the same training procedure.  Doing so brought the accuracy up to 95.7 percent on the validation set after 150 training iterations.
+
+Using the "evaluate" function, my final model results were:
+* training set accuracy of 1.000.
+* validation set accuracy of 0.957.
+* test set accuracy of 0.941.
+
+The accuracy on the training set is much higher than the accuracy on the validation set, indicating that the model is overfitting.  To further improve the model, additional dropout layers could be added after each convolution layer an l2 regularization on the model weights could be introduced into the loss function.
+
+I also investigated the confusion matrix of the classifier on the test set to get a sense of whether the mistakes it made were inconsequential or definitely-not-ready-to-be-deployed-terrible.  The confusion matrix is shown below:
 
 
-####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+![alt_text][imageConfusionMatrix]
 
-To train the model, I used an ....
+First, note that stop signs are not confused with anything else and visa versa (i.e. stop signs have good precion and good recall). A mildly concerning error is that "End of no passing" sings are frequently (15%) labeled as "No passing signs", but this is much better than the reverse (i.e. passing when the sign told you not to)! "Pedestirans" signs are also sometimes misclassified as "Right of way at the next intersection" signs, which is a bit troubling.
 
-####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+### Test a Model on New Images
 
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
-
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
-
-###Test a Model on New Images
-
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
 Here are five German traffic signs that I found on the web:
 
