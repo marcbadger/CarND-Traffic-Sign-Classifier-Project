@@ -22,7 +22,7 @@ The goals of this project were the following:
 
 # Writeup
 
-The following is a writeup of my work on the Traffic Sign Classifier project for the Self Driving Car Nanodegree program.  Here is a link to my [project code](https://github.com/marcbadger/CarND-Traffic-Sign-Classifier-Project/blob/master/Badger_2017_Traffic_Sign_Classifier.ipynb), and [an HTML version](https://github.com/marcbadger/CarND-Traffic-Sign-Classifier-Project/blob/master/Badger_2017_Traffic_Sign_Classifier.html)
+The following is a writeup of my work on the Traffic Sign Classifier project for the Self Driving Car Nanodegree program.  Here is a link to my [project code](https://github.com/marcbadger/CarND-Traffic-Sign-Classifier-Project/blob/master/Badger_2017_Traffic_Sign_Classifier.ipynb), and [an HTML version](https://github.com/marcbadger/CarND-Traffic-Sign-Classifier-Project/blob/master/Badger_2017_Traffic_Sign_Classifier.html).
 
 ## Data Set Summary & Exploration
 
