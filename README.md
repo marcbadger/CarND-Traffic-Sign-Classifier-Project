@@ -17,8 +17,8 @@ The goals of this project were the following:
 [imageHistogramEqualization]: ./writeup_files/histogram_equalization_example.png "Distribution of validation examples."
 [imageNetworkDiagram]: ./writeup_files/network_diagram.png "Diagram of the network used to classifiy German street signs."
 [imageConfusionMatrix]: ./writeup_files/confusion_matrix_norm_testset.png "Confusion matrix for the final model on the test set."
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[imageOwnExamples]: ./writeup_files/own_example_collage.png "German street signs from the wild."
+[imageExamplesTop5Predictions]: ./writeup_files/top_5_probs_own_examples.png "Top 5 predictions for each new example image."
 
 # Writeup
 
@@ -93,48 +93,43 @@ First, note that stop signs are not confused with anything else and visa versa (
 
 ### Test a Model on New Images
 
-#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+#### 1. "Wild" German traffic signs from Google Streetview
 
-Here are five German traffic signs that I found on the web:
+Here are ten German traffic signs that I found using Google Streetview:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![alt text][imageOwnExamples]
 
-The first image might be difficult to classify because ...
+I expect most of these signs to be easy as they are higher quality than many of those in the training data. The "Yield" sign (Class 13 above) might be slightly more difficult because it is at a slight angle rather than from straight on. (No augmentation of the training data was performed. In particular, no affine transformations were performed.) Other difficult signs could be the "General caution" sign with the "No entry" sign in the background, the "No entry" sign that is partially occluded by a "General caution" sign and the "Ahead only" sign that is partially occluded by the "No entry" sign. I have also included an impossible sign "No Roundabout" which isn't even in the training dataset.
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+#### 2. Discussion of the model's predictions and performance on the new traffic signs
 
-Here are the results of the prediction:
+The model achieved 90 percent accuracy on these new examples. However, given that one of them was "impossible", the accuracy on the signs that were actually in the training set was 100 percent.  But given that we only tested on 10 new images, the probability of getting all 10 right assuming the true accuracy was 94.1 percent (as it was on the test set) is (0.941^10) = 0.54, meaning that we are likely to have gotten all 10 right even if the model's performance really was 94.1 percent.  In fact given only 10 samples, the confidence interval for the accuracy (assuming 10 independent Bernoulli trials) is [0.84, 1.00] using [the Wilson score interval](https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval).  If you're looking to test how your model does in some new context, you should collect a much larger test set than just 10 images.  See the next section for visualizations of the model's predictions on each sign.
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+#### 3. Assessing model certainty
 
+The code for making predictions on my final model is located in the "Analyzing Performance" section of the Ipython notebook, and the image below shows the top 5 probabilities for each image.
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+![alt text][imageExampleTop5Predictions]
 
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+Looking at the top-5 probabilities for each of the new signs, the network (which achieved 95% accuracy on the validation set) got every new example correct except the "No Roundabout" sign, which isn't even represented in the training data. It's a bit concerning that it classified it as nearly 100% "Speed limit 50km/h". If you look at the probabilities below, it is the only one with two entries with greater than 0.00e+00 probability. Ideally, the classifier would be confident when it is correct and unconfident when it is incorrect. The classifier also seems to have a lot of trouble with speed limit signs. It's second best guess for most signs is some version of a speed limit sign. I bet that most of the speed limit signs have relatively low precision because the network is giving a lot of false positivies.  See below for the top 5 probabilities for each of the 10 new signs:
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
-
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
-
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
+TopKV2(values=array([[  1.00e+00,   0.00e+00,   0.00e+00,   0.00e+00,   0.00e+00],
+       [  1.00e+00,   0.00e+00,   0.00e+00,   0.00e+00,   0.00e+00],
+       [  1.00e+00,   0.00e+00,   0.00e+00,   0.00e+00,   0.00e+00],
+       [  1.00e+00,   0.00e+00,   0.00e+00,   0.00e+00,   0.00e+00],
+       [  1.00e+00,   0.00e+00,   0.00e+00,   0.00e+00,   0.00e+00],
+       [  1.00e+00,   6.61e-07,   0.00e+00,   0.00e+00,   0.00e+00],
+       [  1.00e+00,   0.00e+00,   0.00e+00,   0.00e+00,   0.00e+00],
+       [  1.00e+00,   0.00e+00,   0.00e+00,   0.00e+00,   0.00e+00],
+       [  1.00e+00,   0.00e+00,   0.00e+00,   0.00e+00,   0.00e+00],
+       [  1.00e+00,   0.00e+00,   0.00e+00,   0.00e+00,   0.00e+00]], dtype=float32), indices=array([[17,  0,  1,  2,  3],
+       [12,  0,  1,  2,  3],
+       [18,  0,  1,  2,  3],
+       [37,  0,  1,  2,  3],
+       [13,  0,  1,  2,  3],
+       [ 2,  9,  0,  1,  3],
+       [33,  0,  1,  2,  3],
+       [38,  0,  1,  2,  3],
+       [17,  0,  1,  2,  3],
+       [35,  0,  1,  2,  3]]))
 
