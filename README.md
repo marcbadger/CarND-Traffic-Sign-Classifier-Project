@@ -109,7 +109,7 @@ The model achieved 90 percent accuracy on these new examples. However, given tha
 
 The code for making predictions on my final model is located in the "Analyzing Performance" section of the Ipython notebook, and the image below shows the top 5 probabilities for each image.
 
-![alt text][imageExampleTop5Predictions]
+![alt text][imageExamplesTop5Predictions]
 
 Looking at the top-5 probabilities for each of the new signs, the network (which achieved 95% accuracy on the validation set) got every new example correct except the "No Roundabout" sign, which isn't even represented in the training data. It's a bit concerning that it classified it as nearly 100% "Speed limit 50km/h". If you look at the probabilities below, it is the only one with two entries with greater than 0.00e+00 probability. Ideally, the classifier would be confident when it is correct and unconfident when it is incorrect. The classifier also seems to have a lot of trouble with speed limit signs. It's second best guess for most signs is some version of a speed limit sign. I bet that most of the speed limit signs have relatively low precision because the network is giving a lot of false positivies.  See below for the top 5 probabilities for each of the 10 new signs:
 
